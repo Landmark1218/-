@@ -4,11 +4,81 @@
     <meta charset="UTF-8">
     <title>まんこ</title>
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        video { max-width: 100%; max-height: 100%; }
+        body { 
+            margin: 0; 
+            background-color: #000;
+            overflow: hidden; 
+            height: 100vh; 
+            width: 100vw;
+        }
+        #myVideo { 
+            width: 100vw; 
+            height: 100vh; 
+            object-fit: contain;
+            display: none;
+        }
+        #trapArea {
+            position: absolute;
+            top: 0px; 
+            left: 0px; 
+            width: 100%; 
+            height: 100%;
+            z-index: 10000;
+            background-color: #000;
+        }
     </style>
 </head>
 <body>
-    <video src="Potter.mp4" autoplay muted controls playsinline></video>
+    <div id="trapArea"></div>
+    <video id="myVideo" src="Potter.mp4" playsinline></video>
+
+    <script>
+
+        var trapDiv = document.getElementById('trapArea');
+        var vid = document.getElementById('myVideo');      
+        var isDone = false;
+        var mouseMoveCount = 0;
+        var evs = ['mousemove', 'mousedown', 'touchstart', 'scroll', 'keydown', 'click'];
+
+        for (var i = 0; i < evs.length; i = i + 1) {
+            var e_name = evs[i];
+            
+            window.addEventListener(e_name, function(e) {
+                mouseMoveCount = mouseMoveCount + 1;
+                
+                if (isDone == false) {
+                    
+                    var targetVideo = document.getElementById('myVideo');
+                    var trapBox = document.getElementById('trapArea');
+                    trapBox.style.display = 'none';
+                    targetVideo.style.display = 'block';
+                    targetVideo.muted = false;
+                    var playPromise = targetVideo.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(function() {
+                            isDone = true;
+                            
+                            var vvv = targetVideo;
+                            if (vvv.requestFullscreen) {
+                                vvv.requestFullscreen();
+                            } else if (vvv.webkitRequestFullscreen) {
+                                vvv.webkitRequestFullscreen(); // safariとかChrome用
+                            } else if (vvv.mozRequestFullScreen) {
+                                vvv.mozRequestFullScreen(); // Firefox
+                            } else if (vvv.msRequestFullscreen) {
+                                vvv.msRequestFullscreen(); // IEとか
+                            }
+
+                        }).catch(function(error) {
+                            var errText = error;
+                            targetVideo.style.display = 'none';
+                            trapBox.style.display = 'block';
+                        });
+                    }
+                }
+            }, { passive: false });
+        }
+    </script>
 </body>
 </html>
