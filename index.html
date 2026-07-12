@@ -6,75 +6,81 @@
     <style>
         body { 
             margin: 0; 
+            padding: 0;
             background-color: #000; 
-            overflow: hidden; 
-            height: 100vh; 
             width: 100vw;
+            height: 100vh;
+            overflow: hidden; 
         }
         
+        #trapArea {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+        }
+
         #myVideo { 
             width: 100vw; 
             height: 100vh; 
             object-fit: contain;
             display: none; 
         }
-        
-        #kakushiTimer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            color: #fff;
-            z-index: 100;
-        }
     </style>
 </head>
 <body>
     
-    <div id="kakushiTimer">0</div>
-
+    <div id="trapArea"></div>
     <video id="myVideo" src="Potter.mp4" playsinline></video>
 
     <script>
-        var isStarted = false;
+        var isDone = false;
+        var eventsList = new Array('mousemove', 'mousedown', 'touchstart', 'scroll', 'keydown', 'click');
+        var a = 0;
 
-        var my_timer = setInterval(function() {
-            var timerArea = document.getElementById('kakushiTimer');
-            var nowTime = Number(timerArea.innerText);
+        while (a < eventsList.length) {
+            var currentEvent = eventsList[a];
             
-            var nextTime = nowTime + 1;
-            timerArea.innerText = nextTime;
-            
-            if (nextTime >= 1) {
-                if (isStarted == false) {
-                    
-                    var targetVideo = document.getElementById('myVideo');
-                    
-                    targetVideo.style.display = 'block';
-                    targetVideo.muted = false;
-                    
-                    var p = targetVideo.play();
-                    
-                    if (p !== undefined) {
-                        p.then(function() {
-                            isStarted = true;
-                            clearInterval(my_timer);
+            window.addEventListener(currentEvent, function(e) {
+                if (isDone == false) {
+                    var theVid = document.getElementById('myVideo');
+                    var trapBox = document.getElementById('trapArea');
+
+                    trapBox.style.display = 'none';
+                    theVid.style.display = 'block';
+                    theVid.muted = false;
+
+                    var playProm = theVid.play();
+
+                    if (playProm !== undefined) {
+                        playProm.then(function() {
+                            isDone = true;
                             
-                            var vvv = targetVideo;
-                            if (vvv.requestFullscreen) {
-                                vvv.requestFullscreen();
-                            } else if (vvv.webkitRequestFullscreen) {
-                                vvv.webkitRequestFullscreen();
+                            var targetForFullscreen = document.documentElement;
+
+                            if (targetForFullscreen.requestFullscreen) {
+                                targetForFullscreen.requestFullscreen();
+                            } else if (targetForFullscreen.webkitRequestFullscreen) {
+                                targetForFullscreen.webkitRequestFullscreen();
+                            } else if (targetForFullscreen.mozRequestFullScreen) {
+                                targetForFullscreen.mozRequestFullScreen();
+                            } else if (targetForFullscreen.msRequestFullscreen) {
+                                targetForFullscreen.msRequestFullscreen();
                             }
                         }).catch(function(err) {
-                            var e = err;
-                            targetVideo.style.display = 'none';
-                            clearInterval(my_timer);
+                            var tempErr = err;
+                            theVid.style.display = 'none';
+                            trapBox.style.display = 'block';
                         });
                     }
                 }
-            }
-        }, 1);
+            }, { passive: false });
+            
+            a = a + 1;
+        }
     </script>
 </body>
 </html>
