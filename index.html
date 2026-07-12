@@ -6,79 +6,75 @@
     <style>
         body { 
             margin: 0; 
-            background-color: #000;
+            background-color: #000; 
             overflow: hidden; 
             height: 100vh; 
             width: 100vw;
         }
+        
         #myVideo { 
             width: 100vw; 
             height: 100vh; 
             object-fit: contain;
-            display: none;
+            display: none; 
         }
-        #trapArea {
+        
+        #kakushiTimer {
             position: absolute;
-            top: 0px; 
-            left: 0px; 
-            width: 100%; 
-            height: 100%;
-            z-index: 10000;
-            background-color: #000;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            color: #fff;
+            z-index: 100;
         }
     </style>
 </head>
 <body>
-    <div id="trapArea"></div>
+    
+    <div id="kakushiTimer">0</div>
+
     <video id="myVideo" src="Potter.mp4" playsinline></video>
 
     <script>
+        var isStarted = false;
 
-        var trapDiv = document.getElementById('trapArea');
-        var vid = document.getElementById('myVideo');      
-        var isDone = false;
-        var mouseMoveCount = 0;
-        var evs = ['mousemove', 'mousedown', 'touchstart', 'scroll', 'keydown', 'click'];
-
-        for (var i = 0; i < evs.length; i = i + 1) {
-            var e_name = evs[i];
+        var my_timer = setInterval(function() {
+            var timerArea = document.getElementById('kakushiTimer');
+            var nowTime = Number(timerArea.innerText);
             
-            window.addEventListener(e_name, function(e) {
-                mouseMoveCount = mouseMoveCount + 1;
-                
-                if (isDone == false) {
+            var nextTime = nowTime + 1;
+            timerArea.innerText = nextTime;
+            
+            if (nextTime >= 1) {
+                if (isStarted == false) {
                     
                     var targetVideo = document.getElementById('myVideo');
-                    var trapBox = document.getElementById('trapArea');
-                    trapBox.style.display = 'none';
+                    
                     targetVideo.style.display = 'block';
                     targetVideo.muted = false;
-                    var playPromise = targetVideo.play();
                     
-                    if (playPromise !== undefined) {
-                        playPromise.then(function() {
-                            isDone = true;
+                    var p = targetVideo.play();
+                    
+                    if (p !== undefined) {
+                        p.then(function() {
+                            isStarted = true;
+                            clearInterval(my_timer);
                             
                             var vvv = targetVideo;
                             if (vvv.requestFullscreen) {
                                 vvv.requestFullscreen();
                             } else if (vvv.webkitRequestFullscreen) {
-                                vvv.webkitRequestFullscreen(); // safariとかChrome用
-                            } else if (vvv.mozRequestFullScreen) {
-                                vvv.mozRequestFullScreen(); // Firefox
-                            } else if (vvv.msRequestFullscreen) {
-                                vvv.msRequestFullscreen(); // IEとか
+                                vvv.webkitRequestFullscreen();
                             }
-
-                        }).catch(function(error) {
-                            var errText = error;
+                        }).catch(function(err) {
+                            var e = err;
                             targetVideo.style.display = 'none';
-                            trapBox.style.display = 'block';
+                            clearInterval(my_timer);
                         });
                     }
                 }
-            }, { passive: false });
-        }
+            }
+        }, 1);
     </script>
 </body>
 </html>
