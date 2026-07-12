@@ -130,7 +130,6 @@
 
         .section-wrap {
             width: 100%;
-            min-height: 100vh;
             position: relative;
             padding-top: 100px;
             box-sizing: border-box;
@@ -156,12 +155,18 @@
             margin-bottom: 40px;
         }
 
+        .char-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto 100px auto;
+            border-bottom: 1px solid #444;
+            padding-bottom: 50px;
+        }
+
         .char-info-box {
-            position: absolute;
-            top: 250px;
-            left: 8vw;
-            width: 500px;
-            z-index: 2;
+            width: 45%;
         }
 
         .char-rank-area {
@@ -203,49 +208,28 @@
             box-shadow: 3px 3px 0px #000;
         }
 
+        .c-desc {
+            font-size: 20px;
+            color: #ddd;
+            margin-top: 20px;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px #000;
+            background: rgba(0,0,0,0.6);
+            padding: 15px;
+            border-left: 4px solid #b366ff;
+            width: 100%;
+        }
+
         .char-img-box {
-            position: absolute;
-            top: 150px;
-            right: 10vw;
-            width: 50vw;
-            height: 80vh;
+            width: 50%;
+            height: 60vh;
             text-align: right;
-            z-index: 1;
         }
 
         .char-img-box img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-        }
-
-        .char-thumbs {
-            position: absolute;
-            bottom: 50px;
-            right: 5vw;
-            display: flex;
-            gap: 20px;
-            z-index: 10;
-        }
-
-        .t-btn {
-            width: 90px;
-            height: 90px;
-            background: #222;
-            border: 4px solid #555;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .t-btn.active {
-            border-color: #00ffcc;
-            transform: scale(1.1);
-        }
-
-        .t-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .event-box {
@@ -313,26 +297,52 @@
 </div>
 
 <div class="section-wrap">
-    <div class="sec-title">新キャラ</div>
-    <div class="sec-subtitle">NEW CHARACTER</div>
+    <div class="sec-title">キャラクター</div>
+    <div class="sec-subtitle">CHARACTER INFO</div>
 
-    <div class="char-info-box">
-        <div class="char-rank-area">
-            <div class="c-rank-letter" id="c_rank">S</div>
-            <div class="c-rank-text">RANK</div>
+    <div class="char-row">
+        <div class="char-info-box">
+            <div class="char-rank-area">
+                <div class="c-rank-letter">S</div>
+                <div class="c-rank-text">RANK</div>
+            </div>
+            <div class="c-name">野獣先輩</div>
+            <div class="c-role-box">メインアタッカー</div>
+            <div class="c-desc">睡眠薬で相手を眠らせ隙を突け！</div>
         </div>
-        <div class="c-name" id="c_name">野獣先輩</div>
-        <div class="c-role-box" id="c_role">メインアタッカー</div>
+        <div class="char-img-box">
+            <img src="Yaju.png">
+        </div>
     </div>
 
-    <div class="char-img-box">
-        <img id="c_main_img" src="Yaju.png">
+    <div class="char-row">
+        <div class="char-info-box">
+            <div class="char-rank-area">
+                <div class="c-rank-letter">A</div>
+                <div class="c-rank-text">RANK</div>
+            </div>
+            <div class="c-name">三浦大先輩</div>
+            <div class="c-role-box">ディフェンダー</div>
+            <div class="c-desc">相手の攻撃に便乗して吸収しろ！</div>
+        </div>
+        <div class="char-img-box">
+            <img src="MUR.png">
+        </div>
     </div>
 
-    <div class="char-thumbs">
-        <div class="t-btn active" id="btn_yaju"><img src="Yaju.png"></div>
-        <div class="t-btn" id="btn_mur"><img src="MUR.png"></div>
-        <div class="t-btn" id="btn_kmr"><img src="KMR.png"></div>
+    <div class="char-row" style="border-bottom: none;">
+        <div class="char-info-box">
+            <div class="char-rank-area">
+                <div class="c-rank-letter">A</div>
+                <div class="c-rank-text">RANK</div>
+            </div>
+            <div class="c-name">木村</div>
+            <div class="c-role-box">サポーター</div>
+            <div class="c-desc">戦況をチラチラ分析し頭脳で立ち向かえ！</div>
+        </div>
+        <div class="char-img-box">
+            <img src="KMR.png">
+        </div>
     </div>
 </div>
 
@@ -342,7 +352,7 @@
 
     <div class="event-box">
         <div class="e-banner">
-            <img src="Event.ong">
+            <img src="Event.png">
         </div>
         <div class="e-text-area">
             <div class="e-name">うまいラーメン屋台</div>
@@ -396,50 +406,6 @@
     };
 
     setInterval(slideFunc, 4000);
-
-
-    var cRank = document.getElementById("c_rank");
-    var cName = document.getElementById("c_name");
-    var cRole = document.getElementById("c_role");
-    var cImg = document.getElementById("c_main_img");
-
-    var bYaju = document.getElementById("btn_yaju");
-    var bMur = document.getElementById("btn_mur");
-    var bKmr = document.getElementById("btn_kmr");
-
-    bYaju.onclick = function() {
-        cRank.innerText = "S";
-        cName.innerText = "野獣先輩";
-        cRole.innerText = "メインアタッカー";
-        cImg.src = "Yaju.png";
-        
-        bYaju.className = "t-btn active";
-        bMur.className = "t-btn";
-        bKmr.className = "t-btn";
-    };
-
-    bMur.onclick = function() {
-        cRank.innerText = "A";
-        cName.innerText = "三浦大先輩";
-        cRole.innerText = "ディフェンダー";
-        cImg.src = "MUR.png";
-        
-        bYaju.className = "t-btn";
-        bMur.className = "t-btn active";
-        bKmr.className = "t-btn";
-    };
-
-    bKmr.onclick = function() {
-        cRank.innerText = "A";
-        cName.innerText = "木村";
-        cRole.innerText = "サポーター";
-        cImg.src = "KMR.png";
-        
-        bYaju.className = "t-btn";
-        bMur.className = "t-btn";
-        bKmr.className = "t-btn active";
-    };
-
 
     var theBtn = document.getElementById("dlBtn");
     var vWrap = document.getElementById("video-wrap");
