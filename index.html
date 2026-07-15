@@ -188,6 +188,21 @@
             font-weight: bold;
             margin-left: 5px;
         }
+        .s-gold {
+            background: linear-gradient(90deg, #fff6d0, #ffd700, #b8860b, #ffd700, #fff6d0);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 0 6px rgba(255,215,0,0.6));
+            animation: goldShine 2.5s linear infinite;
+        }
+
+        @keyframes goldShine {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
 
         .c-name {
             font-size: 80px;
@@ -303,8 +318,8 @@
     <div class="char-row">
         <div class="char-info-box">
             <div class="char-rank-area">
-                <div class="c-rank-letter">S</div>
-                <div class="c-rank-text">RANK</div>
+                <div class="c-rank-letter s-gold">S</div>
+                <div class="c-rank-text s-gold">RANK</div>
             </div>
             <div class="c-name">野獣先輩</div>
             <div class="c-role-box">メインアタッカー</div>
