@@ -1,459 +1,947 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>迫真空手部 - 公式サイト</title>
-    <style>
-        body { 
-            margin: 0; 
-            padding: 0; 
-            font-family: "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif; 
-            background-color: #111;
-            background-image: url('Back.png');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            color: #fff; 
-            overflow-x: hidden; 
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>迫真空手部 - 公式サイト</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23090710'/%3E%3Crect x='2' y='2' width='60' height='60' rx='10' fill='none' stroke='%23ffd700' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia, serif' font-size='38' font-weight='700' text-anchor='middle' fill='%23ffd700'%3E迫%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg-deep:#050408;
+        --bg-panel:#0d0b14;
+        --gold-1:#fff6d0;
+        --gold-2:#ffd700;
+        --gold-3:#b8860b;
+        --red:#ff2d3a;
+        --purple:#b366ff;
+        --text:#f3f0e8;
+        --muted:#9a94a8;
+    }
 
-        .header-area {
-            width: 100%; 
-            height: 80px; 
-            background: rgba(0,0,0,0.85);
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            z-index: 100;
-            border-bottom: 2px solid #ff3300;
-        }
+    *{box-sizing:border-box;}
 
-        .logo-text {
-            float: left;
-            font-size: 34px; 
-            font-weight: bold; 
-            color: #ff3300;
-            margin-top: 18px; 
-            margin-left: 30px;
-            text-shadow: 0 0 10px #ff3300;
-            letter-spacing: 2px;
-        }
+    body{
+        margin:0;
+        padding:0;
+        font-family:"Noto Sans JP", sans-serif;
+        background-color:var(--bg-deep);
+        background-image:
+            radial-gradient(ellipse at 50% 0%, rgba(255,45,58,0.18), transparent 55%),
+            radial-gradient(ellipse at 80% 30%, rgba(179,102,255,0.12), transparent 50%),
+            url('Back.png');
+        background-size:cover;
+        background-attachment:fixed;
+        background-position:center;
+        color:var(--text);
+        overflow-x:hidden;
+    }
 
-        .sns-btn {
-            float: left;
-            margin-top: 15px;
-            margin-left: 30px;
-            cursor: pointer;
-        }
+    ::selection{ background:var(--gold-2); color:#000; }
 
-        .sns-btn img {
-            height: 50px;
-            border-radius: 8px;
-            border: 2px solid #555;
-            transition: transform 0.2s;
-        }
+    .header-area{
+        width:100%;
+        height:84px;
+        background:rgba(5,4,8,0.72);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        position:fixed;
+        top:0; left:0;
+        z-index:100;
+        border-bottom:1px solid rgba(255,215,0,0.35);
+        box-shadow:0 2px 30px rgba(0,0,0,0.6);
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 30px;
+    }
 
-        .sns-btn img:hover {
-            transform: scale(1.1);
-            border-color: #fff;
-        }
+    .brand-block{ display:flex; align-items:center; gap:22px; }
 
-        .news-area {
-            float: right;
-            width: 320px; 
-            height: 40px;
-            margin-top: 20px; 
-            margin-right: 30px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #555;
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-        }
+    .logo-text{
+        font-family:"Shippori Mincho", serif;
+        font-size:30px;
+        font-weight:800;
+        letter-spacing:4px;
+        background:linear-gradient(180deg, #fff 0%, #ffd7d7 40%, var(--red) 100%);
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+        filter:drop-shadow(0 0 12px rgba(255,45,58,0.55));
+        position:relative;
+    }
+    .logo-text::after{
+        content:"OFFICIAL";
+        position:absolute;
+        bottom:-14px; left:2px;
+        font-family:"Cinzel", serif;
+        font-size:9px;
+        letter-spacing:5px;
+        color:var(--gold-2);
+        opacity:0.8;
+        -webkit-text-fill-color:var(--gold-2);
+    }
 
-        .news-item {
-            position: absolute;
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            line-height: 40px; 
-            text-align: center; 
-            font-size: 14px;
-            color: #00ffcc;
-            transition: all 0.6s ease;
-            opacity: 0;
-            transform: translateX(100%);
-        }
+    .sns-btn{ cursor:pointer; display:flex; }
+    .sns-btn img{
+        height:44px;
+        border-radius:8px;
+        border:2px solid rgba(255,215,0,0.4);
+        transition:transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .sns-btn img:hover{
+        transform:scale(1.08);
+        border-color:var(--gold-2);
+        box-shadow:0 0 18px rgba(255,215,0,0.5);
+    }
 
-        .main-center {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+    .header-actions{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        position:relative;
+    }
 
-        .catch-copy {
-            font-size: 48px;
-            margin-bottom: 50px;
-            font-weight: bold;
-            text-shadow: 2px 2px 5px #000, 0 0 15px #ff3300;
-            animation: fuwafuwa 3s infinite;
-        }
+    .icon-btn{
+        width:40px;
+        height:40px;
+        border-radius:6px;
+        background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,215,0,0.25);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        cursor:pointer;
+        transition:background .2s, border-color .2s, transform .15s;
+        position:relative;
+    }
+    .icon-btn:hover{
+        background:rgba(255,215,0,0.12);
+        border-color:var(--gold-2);
+    }
+    .icon-btn:active{ transform:scale(0.94); }
+    .icon-btn svg{ width:20px; height:20px; stroke:var(--gold-1); fill:none; }
 
-        @keyframes fuwafuwa {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
+    .lang-wrap{ position:relative; }
 
-        .btn-green {
-            background: linear-gradient(to bottom, #00ee00, #009900);
-            color: #fff;
-            font-size: 32px;
-            font-weight: bold;
-            padding: 20px 80px;
-            border: 3px solid #fff;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 0 25px #00ff00;
-            transition: all 0.2s;
-        }
+    .lang-menu{
+        position:absolute;
+        top:calc(100% + 10px);
+        left:0;
+        width:150px;
+        background:rgba(10,8,14,0.96);
+        backdrop-filter:blur(10px);
+        border:1px solid rgba(255,215,0,0.3);
+        border-radius:6px;
+        box-shadow:0 15px 40px rgba(0,0,0,0.6);
+        overflow:hidden;
+        display:none;
+        z-index:200;
+    }
+    .lang-menu.open{ display:block; }
 
-        .btn-green:hover {
-            background: linear-gradient(to bottom, #00ff00, #00aa00);
-            transform: scale(1.05);
-            box-shadow: 0 0 40px #00ff00;
-        }
+    .lang-item{
+        padding:12px 16px;
+        font-size:14px;
+        color:#e8e2d8;
+        cursor:pointer;
+        transition:background .15s;
+        border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+    .lang-item:last-child{ border-bottom:none; }
+    .lang-item:hover{ background:rgba(255,215,0,0.1); }
+    .lang-item.active{
+        color:var(--gold-2);
+        font-weight:700;
+        background:rgba(255,215,0,0.06);
+    }
 
-        .section-wrap {
-            width: 100%;
-            position: relative;
-            padding-top: 100px;
-            box-sizing: border-box;
-            background: rgba(0,0,0,0.4);
-        }
+    .share-tip{
+        position:absolute;
+        top:calc(100% + 10px);
+        right:0;
+        background:rgba(10,8,14,0.96);
+        border:1px solid rgba(255,215,0,0.35);
+        color:var(--gold-1);
+        font-size:12px;
+        padding:8px 14px;
+        border-radius:6px;
+        white-space:nowrap;
+        opacity:0;
+        pointer-events:none;
+        transition:opacity .2s;
+    }
+    .share-tip.show{ opacity:1; }
 
-        .sec-title {
-            font-size: 42px;
-            font-weight: bold;
-            font-style: italic;
-            color: #fff;
-            margin-left: 5vw;
-            border-left: 8px solid #ff3300;
-            padding-left: 15px;
-            text-shadow: 2px 2px 4px #000;
-        }
+    .news-area{
+        width:340px;
+        height:42px;
+        background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        border:1px solid rgba(255,215,0,0.3);
+        position:relative;
+        overflow:hidden;
+        border-radius:6px;
+    }
+    .news-area::before{
+        content:"NEWS";
+        position:absolute;
+        left:10px; top:0;
+        height:100%;
+        display:flex; align-items:center;
+        font-family:"Cinzel", serif;
+        font-size:11px;
+        letter-spacing:2px;
+        color:var(--gold-2);
+        z-index:2;
+        background:linear-gradient(90deg, rgba(13,11,20,0.95) 60%, transparent);
+        padding-right:14px;
+    }
 
-        .sec-subtitle {
-            font-size: 18px;
-            color: #aaa;
-            margin-left: 5vw;
-            letter-spacing: 5px;
-            margin-bottom: 40px;
-        }
+    .news-item{
+        position:absolute;
+        top:0; left:64px;
+        width:calc(100% - 64px); height:100%;
+        line-height:42px;
+        text-align:left;
+        font-size:13px;
+        color:#e8e2ff;
+        transition:all .6s ease;
+        opacity:0;
+        transform:translateX(100%);
+    }
 
-        .char-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 80%;
-            margin: 0 auto 100px auto;
-            border-bottom: 1px solid #444;
-            padding-bottom: 50px;
-        }
+    .main-center{
+        width:100%;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+        position:relative;
+        padding-top:84px;
+    }
 
-        .char-info-box {
-            width: 45%;
-        }
+    .particle{
+        position:absolute;
+        border-radius:50%;
+        background:radial-gradient(circle, var(--gold-1), var(--gold-2) 60%, transparent 70%);
+        opacity:.6;
+        pointer-events:none;
+        animation:floatUp linear infinite;
+    }
+    @keyframes floatUp{
+        0%{ transform:translateY(0) translateX(0); opacity:0; }
+        10%{ opacity:.7; }
+        90%{ opacity:.5; }
+        100%{ transform:translateY(-120vh) translateX(20px); opacity:0; }
+    }
 
-        .char-rank-area {
-            display: flex;
-            align-items: baseline;
-        }
+    .hero-eyebrow{
+        font-family:"Cinzel", serif;
+        letter-spacing:10px;
+        font-size:13px;
+        color:var(--gold-2);
+        margin-bottom:18px;
+        opacity:0;
+        animation:heroFade .9s ease forwards .15s;
+    }
 
-        .c-rank-letter {
-            font-size: 70px;
-            color: #b366ff;
-            font-weight: bold;
-            font-style: italic;
-            text-shadow: 2px 2px 0px #000;
-        }
+    .catch-copy{
+        font-family:"Shippori Mincho", serif;
+        font-size:56px;
+        margin-bottom:14px;
+        font-weight:800;
+        text-align:center;
+        letter-spacing:2px;
+        background:linear-gradient(180deg, #fff 0%, var(--gold-1) 35%, var(--gold-2) 60%, var(--gold-3) 100%);
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+        filter:drop-shadow(0 4px 18px rgba(0,0,0,0.7)) drop-shadow(0 0 25px rgba(255,215,0,0.25));
+        opacity:0;
+        animation:heroFade 1s ease forwards .3s;
+    }
 
-        .c-rank-text {
-            font-size: 20px;
-            color: #b366ff;
-            font-weight: bold;
-            margin-left: 5px;
-        }
-        .s-gold {
-            background: linear-gradient(90deg, #fff6d0, #ffd700, #b8860b, #ffd700, #fff6d0);
-            background-size: 300% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: none;
-            filter: drop-shadow(0 0 6px rgba(255,215,0,0.6));
-            animation: goldShine 2.5s linear infinite;
-        }
+    .catch-sub{
+        color:#f0ede4;
+        letter-spacing:3px;
+        font-size:15px;
+        margin-bottom:54px;
+        text-shadow:0 2px 6px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.6);
+        background:rgba(0,0,0,0.35);
+        padding:6px 18px;
+        border-radius:20px;
+        display:inline-block;
+        opacity:0;
+        animation:heroFade 1s ease forwards .5s;
+    }
 
-        @keyframes goldShine {
-            0% { background-position: 0% center; }
-            100% { background-position: 300% center; }
-        }
+    @keyframes heroFade{
+        from{ opacity:0; transform:translateY(14px); }
+        to{ opacity:1; transform:translateY(0); }
+    }
 
-        .c-name {
-            font-size: 80px;
-            font-weight: bold;
-            margin-top: -15px;
-            text-shadow: 3px 3px 0px #000;
-        }
+    .btn-green{
+        position:relative;
+        overflow:hidden;
+        background:linear-gradient(180deg, #1a1006, #05030100 0%);
+        background-color:#120c05;
+        color:var(--gold-1);
+        font-family:"Cinzel", serif;
+        font-size:22px;
+        font-weight:700;
+        letter-spacing:3px;
+        padding:20px 70px;
+        border:1px solid var(--gold-2);
+        border-radius:2px;
+        cursor:pointer;
+        box-shadow:0 0 0 1px rgba(255,215,0,0.15), 0 0 30px rgba(255,215,0,0.25);
+        transition:box-shadow .25s, transform .2s;
+        opacity:0;
+        animation:heroFade 1s ease forwards .7s;
+    }
+    .btn-green::before{
+        /*押した時じゃなくホバーで流す */
+        content:"";
+        position:absolute;
+        top:0; left:-60%;
+        width:40%; height:100%;
+        background:linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+        transform:skewX(-20deg);
+        transition:left .6s ease;
+    }
+    .btn-green:hover::before{ left:130%; }
+    .btn-green:hover{
+        transform:translateY(-2px);
+        box-shadow:0 0 0 1px rgba(255,215,0,0.35), 0 0 45px rgba(255,215,0,0.45);
+    }
 
-        .c-role-box {
-            display: inline-block;
-            background: #ff3366;
-            color: #fff;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 26px;
-            font-weight: bold;
-            margin-top: 30px;
-            box-shadow: 3px 3px 0px #000;
-        }
+    .scroll-cue{
+        position:absolute;
+        bottom:34px;
+        font-size:11px;
+        letter-spacing:4px;
+        color:var(--muted);
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:8px;
+    }
+    .scroll-cue span{
+        width:1px; height:34px;
+        background:linear-gradient(180deg, var(--gold-2), transparent);
+        animation:scrollLine 1.8s ease infinite;
+    }
+    @keyframes scrollLine{
+        0%{ transform:scaleY(0); transform-origin:top; }
+        50%{ transform:scaleY(1); transform-origin:top; }
+        50.1%{ transform-origin:bottom; }
+        100%{ transform:scaleY(0); transform-origin:bottom; }
+    }
 
-        .c-desc {
-            font-size: 20px;
-            color: #ddd;
-            margin-top: 20px;
-            line-height: 1.5;
-            text-shadow: 1px 1px 2px #000;
-            background: rgba(0,0,0,0.6);
-            padding: 15px;
-            border-left: 4px solid #b366ff;
-            width: 100%;
-        }
+    .section-wrap{
+        width:100%;
+        position:relative;
+        padding-top:110px;
+        box-sizing:border-box;
+        background:linear-gradient(180deg, transparent, rgba(0,0,0,0.55) 12%, rgba(0,0,0,0.55) 88%, transparent);
+    }
 
-        .char-img-box {
-            width: 50%;
-            height: 60vh;
-            text-align: right;
-        }
+    .sec-head{
+        text-align:center;
+        margin-bottom:70px;
+    }
+    .sec-eyebrow{
+        font-family:"Cinzel", serif;
+        font-size:12px;
+        letter-spacing:9px;
+        color:var(--gold-2);
+        margin-bottom:14px;
+    }
+    .sec-title{
+        font-family:"Shippori Mincho", serif;
+        font-size:44px;
+        font-weight:800;
+        color:#fff;
+        text-shadow:2px 2px 4px #000;
+        display:inline-block;
+        position:relative;
+        padding:0 34px;
+    }
+    .sec-title::before, .sec-title::after{
+        content:"◆";
+        color:var(--gold-2);
+        font-size:14px;
+        position:absolute;
+        top:50%;
+        transform:translateY(-50%);
+        opacity:.85;
+    }
+    .sec-title::before{ left:0; }
+    .sec-title::after{ right:0; }
+    .reveal{
+        opacity:0;
+        transform:translateY(30px);
+        transition:opacity .8s ease, transform .8s ease;
+    }
+    .reveal.in-view{ opacity:1; transform:translateY(0); }
 
-        .char-img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+    /*キャラクター*/
+    .char-row{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        width:82%;
+        max-width:1200px;
+        margin:0 auto 90px auto;
+        padding:36px;
+        border-radius:6px;
+        background:linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+        border:1px solid rgba(255,255,255,0.08);
+        position:relative;
+        transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    }
+    .char-row:hover{
+        transform:translateY(-6px);
+        box-shadow:0 20px 50px rgba(0,0,0,0.5);
+    }
+    .char-row.rank-s{ border-color:rgba(255,215,0,0.35); }
+    .char-row.rank-s:hover{ box-shadow:0 20px 60px rgba(255,215,0,0.15); }
+    .char-row.rank-a:hover{ box-shadow:0 20px 60px rgba(179,102,255,0.12); }
 
-        .event-box {
-            width: 80%;
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(0,0,0,0.8);
-            border: 2px solid #444;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
+    .char-row::before{
+        content:"";
+        position:absolute;
+        top:-1px; left:-1px;
+        width:26px; height:26px;
+        border-top:2px solid var(--gold-2);
+        border-left:2px solid var(--gold-2);
+        opacity:.8;
+    }
 
-        .e-banner img {
-            width: 100%;
-            display: block;
-            border-bottom: 4px solid #ff3300;
-        }
+    .char-info-box{ width:44%; }
 
-        .e-text-area {
-            padding: 30px;
-        }
+    .char-rank-area{ display:flex; align-items:baseline; }
 
-        .e-name {
-            font-size: 36px;
-            font-weight: bold;
-            color: #ff3366;
-            margin-bottom: 15px;
-        }
+    .c-rank-letter{
+        font-family:"Cinzel", serif;
+        font-size:64px;
+        color:var(--purple);
+        font-weight:700;
+        text-shadow:2px 2px 0px #000;
+    }
+    .c-rank-text{
+        font-family:"Cinzel", serif;
+        font-size:16px;
+        letter-spacing:2px;
+        color:var(--purple);
+        font-weight:700;
+        margin-left:6px;
+    }
 
-        .e-desc {
-            font-size: 22px;
-            line-height: 1.6;
-        }
+    .s-gold{
+        background:linear-gradient(90deg, var(--gold-1), var(--gold-2), var(--gold-3), var(--gold-2), var(--gold-1));
+        background-size:300% auto;
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+        text-shadow:none;
+        filter:drop-shadow(0 0 6px rgba(255,215,0,0.6));
+        animation:goldShine 2.5s linear infinite;
+    }
+    @keyframes goldShine{
+        0%{ background-position:0% center; }
+        100%{ background-position:300% center; }
+    }
 
-        #video-wrap {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; z-index: 9999;
-        }
+    .c-stars{ margin-top:6px; letter-spacing:2px; font-size:16px; }
+    .c-stars.gold{ color:var(--gold-2); text-shadow:0 0 8px rgba(255,215,0,0.6); }
+    .c-stars.purple{ color:var(--purple); text-shadow:0 0 8px rgba(179,102,255,0.5); }
 
-        #myVideo {
-            width: 100vw; height: 100vh; object-fit: contain;
-        }
-    </style>
+    .c-name{
+        font-family:"Shippori Mincho", serif;
+        font-size:66px;
+        font-weight:800;
+        margin-top:-6px;
+        text-shadow:3px 3px 0px #000;
+    }
+
+    .c-role-box{
+        display:inline-block;
+        background:linear-gradient(135deg, #ff4d5a, #b8001a);
+        color:#fff;
+        padding:10px 26px;
+        border-radius:30px;
+        font-size:15px;
+        font-weight:700;
+        letter-spacing:1px;
+        margin-top:22px;
+        box-shadow:3px 3px 0px rgba(0,0,0,0.5);
+    }
+
+    .c-desc{
+        font-size:17px;
+        color:#ddd;
+        margin-top:20px;
+        line-height:1.7;
+        background:rgba(0,0,0,0.5);
+        padding:16px 18px;
+        border-left:3px solid var(--purple);
+        width:100%;
+        border-radius:0 4px 4px 0;
+    }
+    .rank-s .c-desc{ border-left-color:var(--gold-2); }
+
+    .char-img-box{
+        width:50%;
+        height:56vh;
+        text-align:right;
+        position:relative;
+    }
+    .char-img-box img{
+        max-width:100%;
+        max-height:100%;
+        object-fit:contain;
+        filter:drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+    }
+
+    .event-box{
+        width:80%;
+        max-width:1000px;
+        margin:0 auto;
+        background:linear-gradient(180deg, rgba(20,16,10,0.9), rgba(5,4,8,0.95));
+        border:1px solid rgba(255,215,0,0.3);
+        border-radius:8px;
+        box-shadow:0 25px 60px rgba(0,0,0,0.7);
+        position:relative;
+        overflow:hidden;
+    }
+    .event-ribbon{
+        position:absolute;
+        top:18px; right:-46px;
+        background:linear-gradient(90deg, var(--red), #b8001a);
+        color:#fff;
+        font-family:"Cinzel", serif;
+        font-size:12px;
+        letter-spacing:2px;
+        padding:6px 60px;
+        transform:rotate(40deg);
+        box-shadow:0 4px 10px rgba(0,0,0,0.4);
+        z-index:3;
+    }
+
+    .e-banner img{
+        width:100%;
+        display:block;
+        border-bottom:1px solid rgba(255,215,0,0.3);
+    }
+
+    .e-text-area{ padding:34px; }
+
+    .e-name{
+        font-family:"Shippori Mincho", serif;
+        font-size:32px;
+        font-weight:800;
+        color:#fff;
+        margin-bottom:12px;
+    }
+    .e-name::before{ content:"✦ "; color:var(--gold-2); }
+
+    .e-desc{ font-size:19px; line-height:1.7; color:#ddd; }
+    footer{
+        margin-top:120px;
+        padding:40px 20px 30px;
+        text-align:center;
+        border-top:1px solid rgba(255,215,0,0.2);
+        background:rgba(0,0,0,0.6);
+    }
+    .footer-emblem{
+        font-family:"Shippori Mincho", serif;
+        font-size:20px;
+        letter-spacing:3px;
+        color:var(--gold-2);
+        margin-bottom:10px;
+    }
+    footer p{
+        font-size:12px;
+        color:var(--muted);
+        letter-spacing:1px;
+        margin:4px 0;
+    }
+
+    #video-wrap{
+        display:none;
+        position:fixed;
+        top:0; left:0; width:100vw; height:100vh;
+        background:#000; z-index:9999;
+    }
+    #myVideo{ width:100vw; height:100vh; object-fit:contain; }
+
+    @media (max-width:820px){
+        .catch-copy{ font-size:34px; }
+        .char-row{ flex-direction:column; }
+        .char-info-box, .char-img-box{ width:100%; }
+        .char-img-box{ height:38vh; margin-top:20px; text-align:center; }
+        .news-area{ width:200px; }
+    }
+</style>
 </head>
 <body>
 
 <div class="header-area">
-    <div class="logo-text">迫真空手部</div>
-    
-    <a href="https://x.com/Landmark0920" target="_blank" class="sns-btn">
-        <img src="https://image.itmedia.co.jp/news/articles/2307/24/cover_news139.jpg" alt="公式X">
-    </a>
+    <div class="brand-block">
+        <div class="logo-text" data-i18n="brand">迫真空手部</div>
+        <a href="https://x.com/Landmark0920" target="_blank" class="sns-btn">
+            <img src="https://image.itmedia.co.jp/news/articles/2307/24/cover_news139.jpg" alt="公式X">
+        </a>
+    </div>
 
-    <div class="news-area">
-        <div class="news-item" id="news-1">【お知らせ】事前登録1145141919810人突破！</div>
-        <div class="news-item" id="news-2">【アップデート】新キャラクターTNOK追加</div>
-        <div class="news-item" id="news-3">【告知】明日810時からサーバーメンテナンスです</div>
+    <div class="header-actions">
+        <div class="lang-wrap">
+            <div class="icon-btn" id="langBtn" title="言語選択">
+                <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <path d="M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9z"></path>
+                </svg>
+            </div>
+            <div class="lang-menu" id="langMenu">
+                <div class="lang-item active" data-lang="ja">日本語</div>
+                <div class="lang-item" data-lang="ko">한국어</div>
+                <div class="lang-item" data-lang="zh-tw">中文(繁体)</div>
+                <div class="lang-item" data-lang="zh-cn">中文(简体)</div>
+            </div>
+        </div>
+
+        <div class="icon-btn" id="shareBtn" title="URLをコピー">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 4 20 4 20 9"></polyline>
+                <line x1="20" y1="4" x2="10" y2="14"></line>
+                <path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"></path>
+            </svg>
+            <div class="share-tip" id="shareTip" data-i18n="copied">コピーしました</div>
+        </div>
+
+        <div class="news-area">
+        <div class="news-item" id="news-1" data-i18n="news1">事前登録1145141919810人突破！</div>
+        <div class="news-item" id="news-2" data-i18n="news2">新キャラクターTNOK追加</div>
+        <div class="news-item" id="news-3" data-i18n="news3">明日810時サーバーメンテナンス</div>
+    </div>
     </div>
 </div>
 
 <div class="main-center">
-    <div class="catch-copy">さぁ、究極の闘いへーー</div>
-    <button class="btn-green" id="dlBtn">GAME DOWNLOAD</button>
+    <div id="particle-layer"></div>
+    <div class="hero-eyebrow" data-i18n="heroEyebrow">THE ULTIMATE KARATE RPG</div>
+    <div class="catch-copy" data-i18n="catchCopy">さぁ、男同士(意味深)の究極の戦いへ</div>
+    <div class="catch-sub" data-i18n="catchSub">迫真の一撃で、すべてがイキスギる...</div>
+    <button class="btn-green" id="dlBtn" data-i18n="dlBtn">GAME DOWNLOAD</button>
+    <div class="scroll-cue"><span></span><span data-i18n="scroll">SCROLL</span></div>
 </div>
 
 <div class="section-wrap">
-    <div class="sec-title">キャラクター</div>
-    <div class="sec-subtitle">CHARACTER INFO</div>
+    <div class="sec-head reveal">
+        <div class="sec-eyebrow" data-i18n="charEyebrow">CHARACTER INFO</div>
+        <div class="sec-title" data-i18n="charTitle">キャラクター</div>
+    </div>
 
-    <div class="char-row">
+    <div class="char-row rank-s reveal">
         <div class="char-info-box">
             <div class="char-rank-area">
                 <div class="c-rank-letter s-gold">S</div>
                 <div class="c-rank-text s-gold">RANK</div>
             </div>
-            <div class="c-name">野獣先輩</div>
-            <div class="c-role-box">メインアタッカー</div>
-            <div class="c-desc">睡眠薬で相手を眠らせ隙を突け！</div>
+            <div class="c-stars gold">★★★★★</div>
+            <div class="c-name" data-i18n="yajuName">野獣先輩</div>
+            <div class="c-role-box" data-i18n="yajuRole">メインアタッカー</div>
+            <div class="c-desc" data-i18n="yajuDesc">睡眠薬で相手を眠らせ隙を突け！</div>
         </div>
-        <div class="char-img-box">
-            <img src="Yaju.png">
-        </div>
+        <div class="char-img-box"><img src="Yaju.png"></div>
     </div>
 
-    <div class="char-row">
+    <div class="char-row rank-s reveal">
+        <div class="char-info-box">
+            <div class="char-rank-area">
+                <div class="c-rank-letter s-gold">S</div>
+                <div class="c-rank-text s-gold">RANK</div>
+            </div>
+            <div class="c-stars gold">★★★★★</div>
+            <div class="c-name" data-i18n="tnokName">谷岡</div>
+            <div class="c-role-box" data-i18n="tnokRole">デバッファー</div>
+            <div class="c-desc" data-i18n="tnokDesc">服従呪文ヨツンヴァイで相手のステータスを大幅に下げれるぞ！</div>
+        </div>
+        <div class="char-img-box"><img src="TNOK.png"></div>
+    </div>
+
+    <div class="char-row rank-a reveal">
         <div class="char-info-box">
             <div class="char-rank-area">
                 <div class="c-rank-letter">A</div>
                 <div class="c-rank-text">RANK</div>
             </div>
-            <div class="c-name">三浦大先輩</div>
-            <div class="c-role-box">ディフェンダー</div>
-            <div class="c-desc">相手の攻撃に便乗して吸収しろ！</div>
+            <div class="c-stars purple">★★★★☆</div>
+            <div class="c-name" data-i18n="murName">三浦大先輩</div>
+            <div class="c-role-box" data-i18n="murRole">ディフェンダー</div>
+            <div class="c-desc" data-i18n="murDesc">相手の攻撃に便乗して吸収しろ！</div>
         </div>
-        <div class="char-img-box">
-            <img src="MUR.png">
-        </div>
+        <div class="char-img-box"><img src="MUR.png"></div>
     </div>
 
-    <div class="char-row" style="border-bottom: none;">
+    <div class="char-row rank-a reveal">
         <div class="char-info-box">
             <div class="char-rank-area">
                 <div class="c-rank-letter">A</div>
                 <div class="c-rank-text">RANK</div>
             </div>
-            <div class="c-name">木村</div>
-            <div class="c-role-box">サポーター</div>
-            <div class="c-desc">戦況をチラチラ分析し頭脳で立ち向かえ！</div>
+            <div class="c-stars purple">★★★★☆</div>
+            <div class="c-name" data-i18n="kmrName">木村</div>
+            <div class="c-role-box" data-i18n="kmrRole">サポーター</div>
+            <div class="c-desc" data-i18n="kmrDesc">戦況をチラチラ分析し頭脳で立ち向かえ！</div>
         </div>
-        <div class="char-img-box">
-            <img src="KMR.png">
-        </div>
+        <div class="char-img-box"><img src="KMR.png"></div>
     </div>
 </div>
 
-<div class="section-wrap" style="padding-bottom: 100px;">
-    <div class="sec-title">イベント</div>
-    <div class="sec-subtitle">EVENT INFO</div>
+<div class="section-wrap" style="padding-bottom:60px;">
+    <div class="sec-head reveal">
+        <div class="sec-eyebrow" data-i18n="eventEyebrow">EVENT INFO</div>
+        <div class="sec-title" data-i18n="eventTitle">イベント</div>
+    </div>
 
-    <div class="event-box">
-        <div class="e-banner">
-            <img src="Event.png">
-        </div>
+    <div class="event-box reveal">
+        <div class="event-ribbon" data-i18n="eventBadge">OPEN</div>
+        <div class="e-banner"><img src="Event.png"></div>
         <div class="e-text-area">
-            <div class="e-name">うまいラーメン屋台</div>
-            <div class="e-desc">ラーメンをタイミングよく具材を入れて作る</div>
+            <div class="e-name" data-i18n="eventName">うまいラーメン屋台</div>
+            <div class="e-desc" data-i18n="eventDesc">ラーメンをタイミングよく具材を入れて作る</div>
         </div>
     </div>
 </div>
+
+<footer>
+    <div class="footer-emblem" data-i18n="brand">迫真空手部</div>
+    <p data-i18n="copyright">&copy; 2026 HAKUSHIN KARATE PROJECT. UNAUTHORIZED REPRODUCTION ENCOURAGED.</p>
+</footer>
 
 <div id="video-wrap">
     <video id="myVideo" src="Hakushin.mp4" playsinline></video>
 </div>
 
 <script>
-    var currentSlide = 0;
-    
-    var n1 = document.getElementById("news-1");
-    var n2 = document.getElementById("news-2");
-    var n3 = document.getElementById("news-3");
-    
-    var newsList = new Array();
-    newsList[0] = n1;
-    newsList[1] = n2;
-    newsList[2] = n3;
+    var i18n = {
+        ja: {
+            brand:"迫真空手部",
+            news1:"事前登録1145141919810人突破！",
+            news2:"新キャラクターTNOK追加",
+            news3:"明日8〜10時サーバーメンテナンス",
+            heroEyebrow:"THE ULTIMATE KARATE RPG",
+            catchCopy:"さぁ、究極の闘いへーー",
+            catchSub:"迫真の一撃が、すべてを終わらせる。",
+            dlBtn:"GAME DOWNLOAD",
+            scroll:"SCROLL",
+            copied:"コピーしました",
+            charEyebrow:"CHARACTER INFO",
+            charTitle:"キャラクター",
+            eventEyebrow:"EVENT INFO",
+            eventTitle:"イベント",
+            yajuName:"野獣先輩", yajuRole:"メインアタッカー", yajuDesc:"睡眠薬で相手を眠らせ隙を突け！",
+            tnokName:"谷岡", tnokRole:"デバッファー", tnokDesc:"服従呪文ヨツンヴァイで相手のステータスを大幅に下げれるぞ！",
+            murName:"三浦大先輩", murRole:"ディフェンダー", murDesc:"相手の攻撃に便乗して吸収しろ！",
+            kmrName:"木村", kmrRole:"サポーター", kmrDesc:"戦況をチラチラ分析し頭脳で立ち向かえ！",
+            eventBadge:"OPEN",
+            eventName:"うまいラーメン屋台",
+            eventDesc:"ラーメンをタイミングよく具材を入れて作る",
+            copyright:"© 2026 HAKUSHIN KARATE PROJECT. ALL RIGHTS RESERVED."
+        },
+        ko: {
+            brand:"박진 가라테부",
+            news1:"사전등록 1145141919810명 돌파!",
+            news2:"신규 캐릭터 TNOK 추가",
+            news3:"내일 8~10시 서버 점검 예정",
+            heroEyebrow:"THE ULTIMATE KARATE RPG",
+            catchCopy:"자, 궁극의 싸움으로――",
+            catchSub:"박진의 일격이, 모든 것을 끝낸다.",
+            dlBtn:"GAME DOWNLOAD",
+            scroll:"SCROLL",
+            copied:"복사했습니다",
+            charEyebrow:"CHARACTER INFO",
+            charTitle:"캐릭터",
+            eventEyebrow:"EVENT INFO",
+            eventTitle:"이벤트",
+            yajuName:"야수 선배", yajuRole:"메인 어태커", yajuDesc:"수면제로 상대를 재우고 빈틈을 노려라!",
+            tnokName:"타니오카", tnokRole:"디버퍼", tnokDesc:"복종 주문 요툰바이로 상대의 스탯을 크게 낮출 수 있다!",
+            murName:"미우라 대선배", murRole:"디펜더", murDesc:"상대의 공격에 편승해 흡수하라!",
+            kmrName:"키무라", kmrRole:"서포터", kmrDesc:"전황을 힐끔힐끔 분석하며 두뇌로 맞서라!",
+            eventBadge:"OPEN",
+            eventName:"맛있는 라멘 포장마차",
+            eventDesc:"라멘에 타이밍 좋게 재료를 넣어 만든다",
+            copyright:"© 2026 HAKUSHIN KARATE PROJECT. ALL RIGHTS RESERVED."
+        },
+        "zh-tw": {
+            brand:"迫真空手部",
+            news1:"事前登錄突破1145141919810人！",
+            news2:"新角色TNOK追加",
+            news3:"明天8~10點伺服器維護",
+            heroEyebrow:"THE ULTIMATE KARATE RPG",
+            catchCopy:"來吧，邁向究極的戰鬥——",
+            catchSub:"迫真的一擊，將終結一切。",
+            dlBtn:"GAME DOWNLOAD",
+            scroll:"SCROLL",
+            copied:"已複製",
+            charEyebrow:"CHARACTER INFO",
+            charTitle:"角色",
+            eventEyebrow:"EVENT INFO",
+            eventTitle:"活動",
+            yajuName:"野獸學長", yajuRole:"主要輸出", yajuDesc:"用安眠藥讓對手入睡、抓住破綻！",
+            tnokName:"谷岡", tnokRole:"減益者", tnokDesc:"用服從咒語約頓拜大幅降低對手能力值！",
+            murName:"三浦大學長", murRole:"防禦者", murDesc:"趁對手攻擊時順勢吸收！",
+            kmrName:"木村", kmrRole:"輔助", kmrDesc:"一邊觀察戰況一邊用頭腦迎戰！",
+            eventBadge:"OPEN",
+            eventName:"美味拉麵攤",
+            eventDesc:"抓準時機加入配料製作拉麵",
+            copyright:"© 2026 HAKUSHIN KARATE PROJECT. ALL RIGHTS RESERVED."
+        },
+        "zh-cn": {
+            brand:"迫真空手部",
+            news1:"预先注册突破1145141919810人！",
+            news2:"新角色TNOK追加",
+            news3:"明天8~10点服务器维护",
+            heroEyebrow:"THE ULTIMATE KARATE RPG",
+            catchCopy:"来吧，迈向究极的战斗——",
+            catchSub:"迫真的一击，将终结一切。",
+            dlBtn:"GAME DOWNLOAD",
+            scroll:"SCROLL",
+            copied:"已复制",
+            charEyebrow:"CHARACTER INFO",
+            charTitle:"角色",
+            eventEyebrow:"EVENT INFO",
+            eventTitle:"活动",
+            yajuName:"野兽学长", yajuRole:"主力输出", yajuDesc:"用安眠药让对手睡着、抓住破绽！",
+            tnokName:"谷冈", tnokRole:"减益者", tnokDesc:"用服从咒语约顿拜大幅降低对手能力值！",
+            murName:"三浦大学长", murRole:"防御者", murDesc:"趁对手攻击时顺势吸收！",
+            kmrName:"木村", kmrRole:"辅助", kmrDesc:"一边观察战况一边用头脑迎战！",
+            eventBadge:"OPEN",
+            eventName:"美味拉面摊",
+            eventDesc:"抓准时机加入配料制作拉面",
+            copyright:"© 2026 HAKUSHIN KARATE PROJECT. ALL RIGHTS RESERVED."
+        }
+    };
 
+    var i18nNodes = document.querySelectorAll("[data-i18n]");
+    function applyLang(lang){
+        var dict = i18n[lang] || i18n.ja;
+        i18nNodes.forEach(function(el){
+            var key = el.getAttribute("data-i18n");
+            if(dict[key] !== undefined) el.textContent = dict[key];
+        });
+    }
+
+    // 言語ドロップダウン
+    var langBtn = document.getElementById("langBtn");
+    var langMenu = document.getElementById("langMenu");
+    langBtn.onclick = function(e){
+        e.stopPropagation();
+        langMenu.classList.toggle("open");
+    };
+    langMenu.querySelectorAll(".lang-item").forEach(function(item){
+        item.onclick = function(){
+            langMenu.querySelectorAll(".lang-item").forEach(function(i){ i.classList.remove("active"); });
+            item.classList.add("active");
+            langMenu.classList.remove("open");
+            applyLang(item.getAttribute("data-lang"));
+        };
+    });
+    document.addEventListener("click", function(){ langMenu.classList.remove("open"); });
+
+    // シェア
+    var shareBtn = document.getElementById("shareBtn");
+    var shareTip = document.getElementById("shareTip");
+    shareBtn.onclick = function(e){
+        e.stopPropagation();
+        var url = "https://landmark1218.github.io/-/";
+        navigator.clipboard.writeText(url).then(function(){
+            shareTip.classList.add("show");
+            setTimeout(function(){ shareTip.classList.remove("show"); }, 1800);
+        });
+    };
+
+    var currentSlide = 0;
+    var newsList = [
+        document.getElementById("news-1"),
+        document.getElementById("news-2"),
+        document.getElementById("news-3")
+    ];
     newsList[0].style.opacity = "1";
     newsList[0].style.transform = "translateX(0%)";
 
     var slideFunc = function() {
-        var i = 0;
-        while(i < newsList.length) {
+        for(var i=0; i<newsList.length; i++){
             newsList[i].style.opacity = "0";
             newsList[i].style.transform = "translateX(100%)";
-            i = i + 1;
         }
-
-        currentSlide = currentSlide + 1;
-        if(currentSlide >= newsList.length) {
-            currentSlide = 0;
-        }
+        currentSlide++;
+        if(currentSlide >= newsList.length) currentSlide = 0;
 
         var tgt = newsList[currentSlide];
-        
         tgt.style.transition = "none";
-        tgt.style.transform = "translateX(-100%)"; 
-        
+        tgt.style.transform = "translateX(-100%)";
         setTimeout(function(){
             tgt.style.transition = "all 0.6s ease";
             tgt.style.opacity = "1";
             tgt.style.transform = "translateX(0%)";
-        }, 50); 
+        }, 50);
     };
-
     setInterval(slideFunc, 4000);
+
+    // 光の粒子
+    var pLayer = document.getElementById("particle-layer");
+    for(var p=0; p<8; p++){
+        var d = document.createElement("div");
+        d.className = "particle";
+        var size = 3 + Math.random()*5;
+        d.style.width = size + "px";
+        d.style.height = size + "px";
+        d.style.left = (Math.random()*100) + "%";
+        d.style.bottom = "-20px";
+        d.style.animationDuration = (7 + Math.random()*6) + "s";
+        d.style.animationDelay = (Math.random()*6) + "s";
+        pLayer.appendChild(d);
+    }
+
+    var reveals = document.querySelectorAll(".reveal");
+    var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+            if(en.isIntersecting){
+                en.target.classList.add("in-view");
+                io.unobserve(en.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    reveals.forEach(function(el){ io.observe(el); });
 
     var theBtn = document.getElementById("dlBtn");
     var vWrap = document.getElementById("video-wrap");
     var vPlayer = document.getElementById("myVideo");
-    
     var isPushed = false;
 
     theBtn.onclick = function() {
-        if(isPushed == false) {
-            isPushed = true;
+        if(isPushed) return;
+        isPushed = true;
+        vWrap.style.display = "block";
+        vPlayer.muted = false;
 
-            vWrap.style.display = "block";
-            vPlayer.muted = false;
-
-            var playPrm = vPlayer.play();
-            
-            if(playPrm !== undefined) {
-                playPrm.then(function(){
-                    var targetDom = document.documentElement;
-                    
-                    if(targetDom.requestFullscreen) {
-                        targetDom.requestFullscreen();
-                    } else if(targetDom.webkitRequestFullscreen) {
-                        targetDom.webkitRequestFullscreen();
-                    } else if(targetDom.mozRequestFullScreen) {
-                        targetDom.mozRequestFullScreen();
-                    }
-                }).catch(function(err){
-                    var e_msg = err;
-                    isPushed = false;
-                    vWrap.style.display = "none";
-                });
-            }
+        var playPrm = vPlayer.play();
+        if(playPrm !== undefined){
+            playPrm.then(function(){
+                var targetDom = document.documentElement;
+                if(targetDom.requestFullscreen) targetDom.requestFullscreen();
+                else if(targetDom.webkitRequestFullscreen) targetDom.webkitRequestFullscreen();
+                else if(targetDom.mozRequestFullScreen) targetDom.mozRequestFullScreen();
+            }).catch(function(err){
+                isPushed = false;
+                vWrap.style.display = "none";
+            });
         }
     };
 </script>
